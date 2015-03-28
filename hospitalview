@@ -1,0 +1,22 @@
+<?php
+$conn = mysql_connect("localhost","root","");
+$db = mysql_select_db("sirs" , $conn);
+if(!$db);{
+    echo mysql_error();
+}
+
+$name = $_POST['name'];
+$details = $_POST['detail'];
+$photo = addslashes(file_get_contents($_FILES['photo']['tmp_name']));
+$image = getimagesize($_FILES['photo']['tmp_name']);
+
+$imgtype = $image['mime'];
+$insert ="INSERT INTO tesfoto VALUES('','$name','$details','$photo','$imgtype')";
+
+$r = mysql_query($insert, $conn);
+if($r){
+    echo "information stored";
+}else{
+    echo mysql_error();
+}
+?>
