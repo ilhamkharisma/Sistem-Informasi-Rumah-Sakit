@@ -1,0 +1,65 @@
+
+<html>
+    
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title>Sistem Informasi Rumah Sakit</title>   
+    </head>
+    
+    <body><div id="wrapper">
+        <div id="header">
+            <div class="container">
+                <div id="logoarea">logo</div>
+                <div id="navarea">
+                    <ul id="nav">
+                        <li class="active"><a href="index.php">Home</a></li>
+                        <li><a href="?hospital">Hospital</a></li>
+                        <li><a href="?doctor">Doctor</a></li>
+                        <li><a href="?laboratory">Laboratory</a></li>
+                        <li><a href="index.php?login">Login
+                            </a></li>
+
+                    </ul>
+                     
+                </div>
+            </div>
+        </div>
+        
+        <div id="mainarea">
+            <div class="container page">
+                <?php
+                if (isset($_GET['login'])){
+                include("login.php"); }
+
+//                session_start();
+                
+//                if(isset($_SESSION["name"])){
+//                    echo "Welcome" . $_SESSION["name"];
+                    
+                if (isset($_GET['hospital'])){
+                include("hospital.php"); }
+                if (isset($_GET['doctor'])){
+                include("doctor.php"); }
+                if (isset($_GET['laboratory'])){
+                include("laboratory.php"); }
+                
+//                 }else                    
+//                    echo "please login";
+                 
+                ?>  
+            </div>
+            <div class="push">
+                
+            </div>
+        </div>
+        
+        <div id="footer">
+            <div class="container">Copyright - Maintained by Ilham Kharisma</div>
+        </div>
+            </div>
+        
+        
+    </body>
+       
+    
+</html>
