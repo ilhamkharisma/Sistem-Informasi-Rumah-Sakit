@@ -1,0 +1,12 @@
+<?php
+
+$hostname = "localhost";
+$database = "sirs";
+$username = "root";
+$password = "";
+$connection = mysql_pconnect($hostname,$username,$password) 
+        or trigger_error(mysql_error() , E_USER_ERROR);
+mysql_select_db($database)
+
+
+?>
