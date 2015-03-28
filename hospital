@@ -1,0 +1,29 @@
+<?php include 'includes/connection.php'; 
+$query="SELECT * FROM hospital";
+$result1 = mysql_query($query);
+echo "<table border ='1'>";
+echo "<tr>"; 
+echo "<td>" ."id". "</td>";echo "<td>" ."hospitalname". "</td>";echo "<td>" ."address". "</td>";
+echo "</tr>";
+while ($hospital = mysql_fetch_array($result1)) {    
+    echo "<tr>";
+    echo "<td>" . $hospital['id'] . "</td>";
+    echo "<td>" . $hospital['hospitalname'] . "</h2>";
+    echo "<td>" . $hospital['address'] . "</h2>";
+    echo "<tr>";
+    
+}  
+echo "</table>";  
+    ?>
+<br/>
+<br/>
+<br/>
+<h1>update hospital left panel</h1>
+<form action="hospitalupdate.php" method="post">
+    id<input type="text" name="updateId1" value="" /><br/>
+    hospitalname<input type="text" name="updateName1" value="" /><br/>
+    address<input type="text" name="updateAddress1" value="" /><br/>
+    <br/>
+    <input type="submit" name="submit" />
+    
+</form>
