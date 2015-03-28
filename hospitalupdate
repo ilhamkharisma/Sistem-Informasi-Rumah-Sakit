@@ -1,0 +1,22 @@
+<?php
+include 'includes/connection.php'; 
+
+$id = $_POST['updateId1'];
+$hosname = $_POST['updateName1'];
+$hosadd = $_POST['updateAddress1'];
+
+if(!$_POST['submit']){
+    echo "please fill";
+    header("Location: hospital.php");
+
+    
+} else { 
+    mysql_query ( "UPDATE hospital
+            SET id = '$id', hospitalname = '$hosname', address = '$hosadd'  WHERE id = '$id' " ) or die (mysql_error());
+//    mysql_query = "UPDATE * FROM introduction WHERE id = 1"
+   
+    echo "added" ;
+    header('Location: hospital.php');
+}
+
+?>
