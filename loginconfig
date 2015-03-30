@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+
 
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -27,7 +27,8 @@ session_start();
             
 //           header('Location: '. 'index.php');
            echo "login succesfull. Welcome back " . $username;
-            $username= $_SESSION['username'];
+            //$_SESSION['username'] = $username;
+            //$usern = $_SESSION['username'];
             $newURL = ('index.php?name=');
             header('Location: '.$newURL.$username);
       
