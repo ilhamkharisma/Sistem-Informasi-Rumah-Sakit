@@ -1,29 +1,123 @@
-<?php include 'includes/connection.php'; 
+<h1 style="color: white">Laboratory List</h1>
+<?php 
+include 'includes/connection.php'; 
+
+
+if (isset($_POST['update'])){
+    $uppict=$_FILES['uppicture']['name'];
+    $update = "UPDATE laboratory SET  id='{$_POST['upid']}', name='{$_POST['upname']}', address='{$_POST['upaddress']}'";
+   
+    if($uppict != null) {
+        $upimgpath="upload/laboratory/".$_FILES['uppicture']['name'];
+        move_uploaded_file($_FILES['uppicture']['tmp_name'],$upimgpath);
+        $update .= ",img_name='$uppict', img_path='$upimgpath'";
+    }
+    $update .= " WHERE id='{$_POST['upid']}'";
+    $z = mysql_query($update);
+    if($z){
+        header('Location: index.php?laboratory');
+    }else{
+        echo mysql_error();        
+    }
+}
+
+if (isset($_POST['delete'])){
+    $delete="DELETE FROM sirs.laboratory WHERE laboratory.id = '{$_POST['upid']}'";
+    $x = mysql_query($delete);
+    if($x){
+        header('Location: index.php?laboratory');
+    }else{
+        echo mysql_error();        
+    }
+}
+
+if(isset($_POST['add'])){
+    $id = $_POST['id1'];
+    $name = $_POST['name1'];
+    $address = $_POST['address1'];
+    $imgtmp = $_FILES["picture1"]["tmp_name"];
+    $imgname = $_FILES["picture1"]["name"];
+    $imgtype = $_FILES["picture1"]["type"];
+    $imgsize = $_FILES["picture1"]["size"];
+    $imginfo = getimagesize($_FILES["picture1"]["tmp_name"]);
+    $imgwidth = $imginfo[0];
+    $imgheight = $imginfo[1];
+    $imgpath = "upload/laboratory/".$imgname;       
+    $imgpath_thumb = "upload/laboratory/thumbs/".$imgname;
+    
+    move_uploaded_file($imgtmp, $imgpath);
+    
+    if($imgtype == "image/jpeg")
+                {
+                  $imagecreate = "imagecreatefromjpeg";
+                  $imageformat = "imagejpeg";
+                }
+                if($imgtype == "image/png")
+                {                         
+                  $imagecreate = "imagecreatefrompng";
+                  $imageformat = "imagepng";
+                }
+                if($imgtype == "image/gif")
+                {                         
+                  $imagecreate= "imagecreatefromgif";
+                  $imageformat = "imagegif";
+                }
+                
+                $new_width = "250";
+                $new_height = "200";
+                                
+                $image_p = imagecreatetruecolor($new_width, $new_height);
+                $image = $imagecreate($imgpath); //photo folder
+                        
+                imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $imgwidth, $imgheight);                        
+                $imageformat($image_p, $imgpath_thumb);//thumb folder
+    
+    $insert ="INSERT INTO laboratory VALUES('$id','$name','$address','$imgname','$imgpath','$imgtype','$imgpath_thumb')";
+    $r = mysql_query($insert);
+
+    if($r){
+        header('Location: index.php?laboratory');
+    }else{
+        echo mysql_error();        
+    }
+    
+}   
+
 $query="SELECT * FROM laboratory";
-$result1 = mysql_query($query);
-echo "<table border ='1'>";
+$result = mysql_query($query);
+echo "<table border ='1' style= 'color: white' empty-cells: 'show'>";
 echo "<tr>"; 
-echo "<td>" ."id". "</td>";echo "<td>" ."laboratoryname". "</td>";echo "<td>" ."address". "</td>";
+echo "<td style= 'background: orange'>" ."No". " </td>";
+echo "<td style= 'background: orange'>" ."Laboratory Name". " </td>";
+echo "<td style= 'background: orange'>" ."Address". " </td>";
+echo "<td style= 'background: orange'>" ."Picture". " </td>";
+echo "<td style= 'background: orange'>" ."Upload". " </td>";
+echo "<td style= 'background: orange'>" ."". " </td>";
 echo "</tr>";
-while ($laboratory = mysql_fetch_array($result1)) {    
-    echo "<tr>";
-    echo "<td>" . $laboratory['id'] . "</td>";
-    echo "<td>" . $laboratory['laboratoryname'] . "</h2>";
-    echo "<td>" . $laboratory['address'] . "</h2>";
-    echo "<tr>";
-    
-}  
+while ($row = mysql_fetch_array($result)) {  
+    echo "<form enctype=multipart/form-data action=laboratory.php method=post>
+        <tr>
+        <td><input type=text name=upid style= 'width: 25px' value=".$row['id']."></td>
+        <td><input type=text name=upname style= 'width: 120px' value='".$row['name']."'></td>
+        <td><input type=text name=upaddress style= 'width: 120px' value='".$row['address']."'></td>
+        
+        <td><a href='".$row['img_path']."'>".$row['img_name']."</td> 
+        <td><input type=file name=uppicture style= 'width: 200px'></td>
+        <td><input type=submit name=update value=Update style= 'width: 70px'></td>
+        <td><input type=submit name=delete value=Delete style= 'width: 70px'></td>
+        <tr>
+        </form>";    
+}
+echo "<form enctype=multipart/form-data action=laboratory.php method=post>";
+echo "<tr>";
+echo "<td>" . "<input type=text name=id1 style='width: 25px' value=>" . " </td>";
+echo "<td>" . "<input type=text name=name1 style='width: 120px' value=>" . " </td>";
+echo "<td>" . "<input type=text name=address1 style='width: 120px' value=>" . " </td>";
+
+echo "<td>" ."&nbsp"."</td>";
+echo "<td>" . "<input type=file name=picture1 style='width: 200px'>" . " </td>";
+echo "<td>" . "<input type=submit name=add value=Add style= 'width: 70px'" . " </td>";
+echo "</form>";
 echo "</table>";  
-    ?>
-<br/>
-<br/>
-<br/>
-<h1>update laboratory left panel</h1>
-<form action="laboratoryupdate.php" method="post">
-    id<input type="text" name="updateId1" value="" /><br/>
-    laboratoryname<input type="text" name="updateName1" value="" /><br/>
-    address<input type="text" name="updateAddress1" value="" /><br/>
-    <br/>
-    <input type="submit" name="submit" />
-    
-</form>
+?>
+
