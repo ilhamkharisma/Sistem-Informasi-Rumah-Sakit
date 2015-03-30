@@ -1,0 +1,52 @@
+<h1 style="color: white">Laboratory List</h1>
+<?php
+include 'includes/connection.php'; 
+$query="SELECT * FROM laboratory " ;
+$result1 = mysql_query($query);
+echo "<table style='color:white' empty-cells:'show' align='center'>";
+$x = 1;
+echo "<tr>";
+while ($row = mysql_fetch_array($result1)) { 
+    if ($x == 3) {
+        echo " 
+            <td>
+            <div class='img-frame-cap'
+                 style='width:250px;
+                        background:#ffffff;
+                        padding:18px 18px 2px 18px;
+                        border:1px solid #999999;'>
+                <a href='index.php?laboratoryview=".$row['id']."'>        
+                <img src='".$row['img_path_thumb']."'>                
+                <div class='caption'
+                     style='text-align:center;
+                            margin-top:4px;
+                            font-size:12px;'>".$row['name']."</div>
+                </div>
+                   
+            <td>"    
+                ;
+        echo "</tr>";
+        $x=1;
+    }
+    else {
+        echo "
+            <td>
+            <div class='img-frame-cap'
+                 style='width:250px;
+                        background:#ffffff;
+                        padding:18px 18px 2px 18px;
+                        border:1px solid #999999;'>
+                <a href='index.php?laboratoryview=".$row['id']."'>
+                <img src='".$row['img_path_thumb']."'>                
+                <div class='caption' 
+                     style='text-align:center;
+                            margin-top:4px;
+                            font-size:12px;'>".$row['name']."</div>
+                </div>";
+    }
+    $x++;
+}
+    echo "</table>";
+
+?>
+
