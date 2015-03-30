@@ -1,0 +1,51 @@
+<h1 style="color: white">Hospital List</h1>
+<?php
+include 'includes/connection.php';
+$id=$_GET['hospitalview'];
+$query="SELECT * FROM hospital WHERE id='{$id}'";
+$result = mysql_query($query);
+$row=  mysql_fetch_array($result);
+$image=$row['img_path'];
+$nama=$row['name'];
+$address=$row['address'];
+$fasilitas=$row['fasilitas'];
+//while ($row = mysql_fetch_array($result)) {  
+//    echo "
+//        
+//        <img src='".$row['img_path_thumb']."'>
+//        <h1>".$row['name']."</h1>
+//        <h3>".$row['address']."</h3>
+//        ".$row['fasilitas']."
+//                
+//        ";    
+//}
+?>
+<table>
+    <td style="width:400px; height: 350px; border-style: solid;"><?php echo "<img src='".$image."' width:'400px' height='350px'>" ?></td>
+    <td><?php echo "<p style='  background-color: white; 
+                                width: 300px;
+                                padding: 15px 5px 15px 5px;
+                                
+                                border-color: red;                               
+                                ;'> 
+                    $nama</p>"?>
+                    <?php echo "<p style='  background-color: white; 
+                                width: 300px;
+                                padding: 15px 5px 15px 5px;
+                                
+                                border-color: red;                               
+                                ;'> 
+                                $address</p>"?>
+        <p style='  background-color: white; 
+                               width: 300px;
+                             padding: 15px 5px 15px 5px;'>Fasilitas: <?php echo$fasilitas?></p></td>
+</table>
+<table border="1">
+    <td style="width:900px; height: 200px;vertical-align: top">
+        <p>
+            Description Description Description 
+        </p>
+    </td>
+</table>
+
+<input type=button value=back onClick="parent.location='index.php?hospital'"> 
