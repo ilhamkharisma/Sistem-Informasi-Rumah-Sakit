@@ -1,7 +1,8 @@
 html {
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100%;
+/*    position:relative*/
 }
 body{
     background : #ffffff;
@@ -21,8 +22,10 @@ body{
 }
 .container{
     width: 960px;
-    height: auto;
-    margin: 0 auto;   
+    
+    margin: 0 auto;
+    
+ 
 }
 #logoarea{
 /*    width: 300px;
@@ -58,9 +61,19 @@ body{
     background-color: black;
 }
 .page{
-    background-color: wheat;
-    padding: 20px;
-    padding-bottom: 1px;
+    background-color: #555555;
+/*    position:absolute;
+    top:50;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:-1;*/
+    padding: 10px 10px 50px 10px;
+    
+    
+    
+    
 }
 #mainarea{
 
@@ -71,13 +84,15 @@ body{
     height: 20px;
     width: 100%;
     color: white;
+    text-align: center;
+    font-size: 12;
     padding-top: 20px;
     position: absolute;
     bottom : 0;
 }
-.push{
+/*.push{
     height: 20px;
-}
+}*/
 /*p{
   margin-bottom: 20px;  
 }*/
