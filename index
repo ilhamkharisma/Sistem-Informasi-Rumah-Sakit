@@ -1,4 +1,11 @@
+<?php
+session_start();
 
+if (isset($_GET['name'])){
+    $_SESSION['username'] = $_GET['name'];
+}
+
+?>
 <html>
     
     <head>
@@ -13,11 +20,19 @@
                 <div id="navarea">
                     <ul id="nav">
                         <li class="active"><a href="index.php">Home</a></li>
-                        <li><a href="?hospital">Hospital</a></li>
-                        <li><a href="?doctor">Doctor</a></li>
-                        <li><a href="?laboratory">Laboratory</a></li>
-                        <li><a href="index.php?login">Login
-                            </a></li>
+                        <li><a href="index.php?hospital">Hospital</a></li>
+                        <li><a href="index.php?doctor">Doctor</a></li>
+                        <li><a href="index.php?laboratory">Laboratory</a></li>
+                        <?php
+                        if (isset($_SESSION['username'])){
+                        echo "<li><a href='index.php?logout'>Logout
+                            </a></li>";
+                        }
+                        else{
+                        echo "<li><a href='index.php?login'>Login
+                            </a></li>";
+                        }
+                        ?>
 
                     </ul>
                      
@@ -29,23 +44,49 @@
             <div class="container page">
                 <?php
                 if (isset($_GET['login'])){
-                include("login.php"); }
-
-//                session_start();
+                include("login.php"); }             
                 
-//                if(isset($_SESSION["name"])){
-//                    echo "Welcome" . $_SESSION["name"];
-                    
                 if (isset($_GET['hospital'])){
-                include("hospital.php"); }
+                     if (isset($_SESSION['username']))
+                         {
+                         include("hospital.php");                         
+                         }else{
+                         include("userhospital.php");
+                         
+                         }
+                }
+                if (isset($_GET['hospitalview'])){
+                include("userhospitalview.php"); } 
+                
                 if (isset($_GET['doctor'])){
-                include("doctor.php"); }
+                     if (isset($_SESSION['username']))
+                         {
+                         include("doctor.php");                         
+                         }else{
+                             include("doctoruser.php");                           
+                         }
+                }
+                if (isset($_GET['doctorview'])){
+                include("doctoruserview.php"); }
+
                 if (isset($_GET['laboratory'])){
-                include("laboratory.php"); }
+                     if (isset($_SESSION['username']))
+                         {
+                         include("laboratory.php");                         
+                         }else{
+                            include("laboratoryuser.php");                             
+                         }
+                }
+                if (isset($_GET['laboratoryview'])){
+                include("laboratoryuserview.php"); }
+                
+                if(isset($_GET['logout'])){
+                    include("logout.php");
+                }
                 
 //                 }else                    
 //                    echo "please login";
-                 
+               
                 ?>  
             </div>
             <div class="push">
